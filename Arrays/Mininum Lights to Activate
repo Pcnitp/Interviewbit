@@ -1,1 +1,28 @@
+public class Solution {
+    
+    public int solve(int[] a, int b) {
+        int n=a.length;
+        int i=0;
+        b--;
+        int count =0;
+        
+        while(i<n){
+            int start=Math.max(0, i-b);
+            int end=Math.min(i+b, n-1);
+            int j=end;
+            while(j>=start){
+                if(a[j]==1){
+                    count++;
+                    i=j+b+1;
+                    break;
+                }
+                j--;
+            }
+            if(j<start) return -1;
+        }
+        
+        return count;
+        
+    }
+}
 
