@@ -1,0 +1,24 @@
+public class Solution {
+    public int solve(int n, int[] a) {
+        int sum=0;
+        for(int i=0;i<n;i++)
+            sum+=a[i];
+        
+        if(sum%3!=0) return 0;
+        
+        int oneThird=sum/3;
+        int twoThird=(2*sum)/3;
+        
+        int count=0;
+        int oneThirdCount=0;
+        sum=0;
+        
+        for(int i=0;i<n-1;i++){
+            sum+=a[i];
+            if(sum==twoThird) count+=oneThirdCount;
+            if(sum==oneThird) oneThirdCount++;
+        }
+        
+        return count;
+    }
+}
