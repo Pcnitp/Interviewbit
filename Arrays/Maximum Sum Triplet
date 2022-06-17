@@ -1,0 +1,29 @@
+public class Solution {
+    
+    public int solve(int[] a) {
+        int n=a.length;
+        int[] right=new int[n];
+        
+        int max=a[n-1];
+        for(int i=n-2; i>=0; i--){
+            max=Math.max(max, a[i+1]);
+            right[i]=max;
+        }
+        
+        int ans=-1;
+        TreeSet<Integer> left = new TreeSet<Integer>();
+        left.add(a[0]);
+        
+        for(int i=1;i<n-1;i++){
+            if(right[i]<=a[i]) continue;
+            
+            Integer low=left.lower(a[i]);
+            left.add(a[i]);
+            if(low==null) continue;
+            
+            ans=Math.max(ans, a[i]+right[i]+low);
+        }
+        
+        return ans;
+    }
+}
