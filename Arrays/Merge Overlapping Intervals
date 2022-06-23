@@ -9,22 +9,16 @@
  */
 public class Solution {
     
-    public class SortBy implements Comparator<Interval>{
+    public class SortByStart implements Comparator<Interval>{
         public int compare(Interval a, Interval b){
-            if(a.start<b.start) return -1;
-            if(a.start>b.start) return 1;
-            if(a.end<b.end) return -1;
-            if(a.end>b.end) return 1;
-            return 0;
+            return a.start-b.start;
         }
     }
     
     public ArrayList<Interval> merge(ArrayList<Interval> a) {
-        
-        Collections.sort(a,new SortBy());
+        Collections.sort(a,new SortByStart());
         
         for(int i=0;i<a.size()-1;i++){
-            //System.out.print(a.get(i).start+","+a.get(i).end+" ");
             if(a.get(i).end>=a.get(i+1).start){
                 int s=Math.min(a.get(i).start,a.get(i+1).start);
                 int e=Math.max(a.get(i).end,a.get(i+1).end);
