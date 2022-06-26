@@ -1,0 +1,21 @@
+public class Solution {
+    public int[] findOccurences(int[] a) {
+        TreeMap<Integer, Integer> map = new TreeMap();
+        int n=a.length;
+        
+        for(int i=0;i<n;i++){
+            if(map.containsKey(a[i])) map.replace(a[i], map.get(a[i])+1);
+            else map.put(a[i], 1);
+        }
+        
+        int m=map.size();
+        int[] ans=new int[m];
+        int i=0;
+        
+        for(Map.Entry<Integer, Integer> e: map.entrySet()){
+            ans[i] = e.getValue();
+            i++;
+        }
+        return ans;
+    }
+}
