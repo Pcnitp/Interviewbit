@@ -1,0 +1,38 @@
+public class Solution {
+    public int solve(int[] a) {
+        int n=a.length;
+        if(n==1) return 1;
+        
+        int[] oddSum = new int[n];
+        int[] evenSum = new int[n];
+        
+        if((n-1)%2==0) evenSum[n-1]=a[n-1];
+        else oddSum[n-1] = a[n-1];
+        
+        for(int i=n-2;i>-1;i--){
+            if(i%2==0){
+                evenSum[i] = evenSum[i+1] + a[i];
+                oddSum[i] = oddSum[i+1];
+            }
+            else{
+                evenSum[i] = evenSum[i+1];
+                oddSum[i] = oddSum[i+1] + a[i];
+            }
+        }
+        
+        int oddCurr=0, evenCurr=0;
+        int count=0;
+        
+        for(int i=0;i<n-1;i++){
+            int odd=oddCurr+evenSum[i+1];
+            int even=evenCurr+oddSum[i+1];
+            if(odd==even) count++;
+                
+            if(i%2==0)evenCurr+=a[i];
+            else oddCurr+=a[i];
+        }
+        if(oddCurr==evenCurr) count++;
+        
+        return count;
+    }
+}
