@@ -1,0 +1,39 @@
+public class Solution {
+    
+    public class sortLogs implements Comparator<String> {
+        public int compare(String a, String b){
+            String[] as = a.split("-");
+            String[] bs = b.split("-");
+            
+            int n=as.length;
+            int m=bs.length;
+            int l=Math.min(n,m);
+            
+            for(int i=1;i<l;i++){
+                int x=as[i].compareTo(bs[i]);
+                if(x !=0 ) return x;
+            }
+            
+            if(n!=m) return n-m;
+            return as[0].compareTo(bs[0]);
+        }
+    }
+    
+    public ArrayList<String> reorderLogs(ArrayList<String> a) {
+        int n=a.size();
+        ArrayList<String> digit = new ArrayList();
+        ArrayList<String> letter = new ArrayList();
+        
+        for(int i=0;i<n;i++){
+            String[] s=a.get(i).split("-");
+            if((s[1].charAt(0) >= '0') && (s[1].charAt(0) <= '9'))
+                digit.add(a.get(i));
+            else letter.add(a.get(i));
+        }
+        
+        Collections.sort(letter, new sortLogs());
+        letter.addAll(digit);
+        
+        return letter;
+    }
+}
