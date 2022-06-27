@@ -1,0 +1,12 @@
+public class Solution {
+    public int[] solve(int[] a) {
+        int[] ans=new int[2];
+        
+        for(int x: a){
+            if(x>0) ans[0]++;
+            else if(x<0) ans[1]++;
+        }
+        
+        return ans;
+    }
+}
