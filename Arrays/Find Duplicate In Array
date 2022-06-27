@@ -1,19 +1,11 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST
-    public int repeatedNumber(final List<Integer> a) {
-        int n=a.size();
-        int slow=a.get(0);
-        int fast=a.get(a.get(0));
-        while(slow!=fast){
-            slow=a.get(slow);
-            fast=a.get(a.get(fast));
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int repeatedNumber(final int[] a) {
+        HashSet<Integer> hs=new HashSet();
+        for(int x: a){
+            if(hs.contains(x)) return x;
+            hs.add(x);
         }
-        
-        slow=0;
-        while(slow!=fast){
-            slow=a.get(slow);
-            fast=a.get(fast);
-        }
-        return slow;
+        return -1;
     }
 }
