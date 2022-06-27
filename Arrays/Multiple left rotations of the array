@@ -1,0 +1,27 @@
+public class Solution {
+    public ArrayList<ArrayList<Integer>> solve(ArrayList<Integer> a, ArrayList<Integer> b) {
+        int n=a.size();
+        int m=b.size();
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<ArrayList<Integer>>();
+        
+        for(int i=0;i<m;i++){
+            if(b.get(i) == 0){ 
+                ans.add(a);
+                continue;
+            }
+            int pivot=(b.get(i)-1) % n;
+            ArrayList<Integer> ar=new ArrayList();
+            
+            for(int j=pivot+1;j<n;j++)
+                ar.add(a.get(j));
+            
+            for(int j=0;j<pivot;j++)
+                ar.add(a.get(j));
+                
+            ar.add(a.get(pivot));
+            ans.add(ar);
+        }
+        
+        return ans;
+    }
+}
