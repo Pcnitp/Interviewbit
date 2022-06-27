@@ -1,0 +1,14 @@
+public class Solution {
+    public int solve(int[] a) {
+        int n=a.length;
+        int max=a[0];
+        int count=1;
+        
+        for(int i=1;i<n;i++){
+            if(a[i]>max) count++;
+            max=Math.max(max, a[i]);
+        }
+        
+        return count;
+    }
+}
