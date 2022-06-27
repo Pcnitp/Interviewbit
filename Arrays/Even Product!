@@ -1,0 +1,14 @@
+public class Solution {
+    public int solve(int[] a) {
+        int n=a.length;
+        long ans=1;
+        long m=1000000007;
+        
+        while(n>0){
+            n--;
+            ans = (ans * 2) % m;
+        }
+        
+        return (int)(ans-1);
+    }
+}
