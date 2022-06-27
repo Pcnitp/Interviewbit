@@ -1,0 +1,8 @@
+public class Solution {
+    public int solve(int[] a, int[] b, int c) {
+        int count1=0, count2=0;
+        for(int x: a) if(x>c) count1++;
+        for(int x: b) if(x<c) count2++;
+        return Math.max(count1, count2);
+    }
+}
