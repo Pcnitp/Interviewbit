@@ -1,0 +1,16 @@
+public class Solution {
+    public int solve(int[] a, int x) {
+        int n=a.length;
+        int curr1=a[0], curr2=a[0]-x, curr3=a[0]+x;
+        boolean flag1=true, flag2=true, flag3=true;
+        
+        for(int i=1;i<n;i++){
+            if((a[i]-x)!=curr1 && (a[i]+x)!=curr1 && a[i] !=curr1) flag1=false;
+            if((a[i]-x)!=curr2 && (a[i]+x)!=curr2 && a[i] !=curr2) flag2=false;
+            if((a[i]-x)!=curr3 && (a[i]+x)!=curr3 && a[i] !=curr3) flag3=false;
+        }
+        
+        if(flag1 || flag2 || flag3) return 1;
+        else return 0;
+    }
+}
