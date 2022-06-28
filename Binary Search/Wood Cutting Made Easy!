@@ -1,0 +1,26 @@
+public class Solution {
+    
+    public int cutWood(int[] a, int b, int s, int e){
+        if(s>e) return -1;
+        
+        int mid=s+(e-s)/2;
+        long sum=0;
+        for(int x: a)
+            if(x>mid) sum+=x-mid;
+        
+        if(sum==b) return mid;
+        if(sum < b) return cutWood(a, b, s, mid-1);
+        
+        int l=cutWood(a, b, mid+1, e);
+        if(l==-1) return mid;
+        return l;
+    }
+    
+    public int solve(int[] a, int b) {
+        int n=a.length;
+        int max=0;
+        for(int x: a) max=Math.max(max, x);
+        
+        return cutWood(a, b, 0, max);
+    }
+}
