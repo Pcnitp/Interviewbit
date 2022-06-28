@@ -1,12 +1,11 @@
 public class Solution {
-    public int titleToNumber(String s) {
-        int n=s.length();
+    public int titleToNumber(String a) {
+        int n=a.length();
         int ans=0;
+        
         for(int i=0;i<n;i++){
-            int x=(int)(s.charAt(i)-'A');
-            int y=(int)Math.pow(26,n-i-1);
-            //System.out.println(x+" "+y);
-            ans+=(x+1)*y;
+            int x=(int)(a.charAt(i)-'A') + 1;
+            ans= ans*26 +x;
         }
         return ans;
     }
