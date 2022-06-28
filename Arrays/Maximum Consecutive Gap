@@ -1,11 +1,20 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST. IT IS READ ONLY
-    public int maximumGap(final List<Integer> a) {
-        Collections.sort(a);
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int maximumGap(final int[] a) {
+        int n=a.length;
+        TreeSet<Integer> ts= new TreeSet();
+        for(int x: a)
+            ts.add(x);
+        
         int max=0;
-        int n=a.size();
-        for(int i=1;i<n;i++)
-            max=Math.max(max, a.get(i)-a.get(i-1));
+        int prev=ts.pollFirst();
+        
+        while(ts.size()>0){
+            int curr=ts.pollFirst();
+            max=Math.max(max, curr-prev);
+            prev=curr;
+        }
+        
         return max;
     }
 }
