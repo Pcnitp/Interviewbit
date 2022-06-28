@@ -1,0 +1,8 @@
+public class Solution {
+    public int solve(int a, int b) {
+        return Math.min(a-1, b-1) + 
+               Math.min(8-a, 8-b) +
+               Math.min(8-a, b-1) +
+               Math.min(a-1, 8-b);
+    }
+}
