@@ -1,16 +1,19 @@
 public class Solution {
     public int isPalindrome(int a) {
-        String s=Integer.toString(a);
         if(a<0) return 0;
-        int n=s.length();
-        int k=1;
-        for(int i=0;i<n/2;i++){
-            if(s.charAt(i)!=s.charAt(n-i-1)){ 
-                k=0;
-                break;
-            }
+        
+        int p=(int)Math.log10(a);
+        int m=(int)Math.pow(10,p);
+        
+        while(m>0){
+            int s=a/m;
+            int e=a%10;
+            if(s!=e) return 0;
+            a=a%m;
+            a=a/10;
+            m/=100;
         }
-        return k;
-            
+        
+        return 1;
     }
 }
