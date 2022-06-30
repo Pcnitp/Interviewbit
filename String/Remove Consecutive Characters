@@ -1,0 +1,27 @@
+public class Solution {
+    public String solve(String a, int b) {
+        int n=a.length();
+        if(b==1) return "";
+        int i=0;
+        
+        while(i<n){
+            int count=0;
+            char ch=a.charAt(i);
+            while(i<n){
+                if(a.charAt(i)==ch){ 
+                    count++;
+                    i++;
+                }
+                else break;
+            }
+            
+            if(count==b){ 
+                a=a.substring(0, i-b) + a.substring(i);
+                n = n - b;
+                i = i - b;
+            }
+        }
+        
+        return a;
+    }
+}
