@@ -1,0 +1,28 @@
+public class Solution {
+    
+    public boolean isVowel(char c){
+        if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u') return true;
+        return false;
+    }
+    
+    public int solve(String a) {
+        int n=a.length();
+        int v=0;
+        int c=0;
+        long count=0;
+        long m=1000000007;
+        
+        for(int i=n-1;i>-1;i--){
+            if(isVowel(a.charAt(i))){
+                v++;
+                count = (count+c)%m;
+            }
+            else {
+                c++;
+                count = (count+v)%m;
+            }
+        }
+        
+        return (int)count;
+    }
+}
