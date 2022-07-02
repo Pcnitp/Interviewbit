@@ -1,0 +1,20 @@
+public class Solution {
+    
+    public int search(int[] a, int s, int e, int b){
+        int n=a.length;
+        if(s<0 || e>n-1 || e<s) return 0;
+        if(e==s){ 
+            if(a[s]>b) return s;
+            return s+1;
+        }
+        int mid=s+(e-s)/2;
+        if(a[mid] <= b) return search(a, mid+1, e, b);
+        else return search(a, s, mid, b);
+    }
+    
+    public int solve(int[] a, int b) {
+        int n=a.length;
+        int x=search(a, 0, n-1, b);
+        return x;
+    }
+}
