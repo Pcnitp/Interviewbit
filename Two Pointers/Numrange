@@ -1,0 +1,26 @@
+public class Solution {
+    
+    public int solve(int[] a, int k){
+        int n=a.length;
+        int i=0, j=0, sum=0, count=0;
+        
+        while(j<n){
+            sum+=a[j];
+            while(i<=j && sum>k){
+                sum-=a[i];
+                i++;
+            }
+            
+            count+= j-i+1;
+            j++;
+        }
+        return count;
+    }
+    
+    public int numRange(int[] a, int b, int c) {
+        int n=a.length;
+        int x=solve(a, b-1);
+        int y=solve(a, c);
+        return y-x;
+    }
+}
