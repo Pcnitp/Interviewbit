@@ -1,30 +1,19 @@
 public class Solution {
     public int removeDuplicates(ArrayList<Integer> a) {
         int n=a.size();
-        if(n==1) return 1;
-        int j=n-1;
-        int i=0;
-        while(i<j){
-            int x=a.get(i);
-            int k=i+1;
-            while(k<n && a.get(k)==x)
-                k++;
-            k--;
-            
-            if(k==i){ 
+        int i=0, j=1;
+        
+        while(j<n){
+            if(a.get(i).equals(a.get(j))) j++;
+            else{
                 i++;
-                continue;
-            }
-            
-            int in=k+1;
-            i++;
-            for(;in<n&&i<=k;i++,in++){
                 int temp=a.get(i);
-                a.set(i,a.get(in));
-                a.set(in,temp);
+                a.set(i, a.get(j));
+                a.set(j, temp);
+                j++;
             }
-            i++;
         }
-        return i;
+        
+        return i+1;
     }
 }
