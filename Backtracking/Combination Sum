@@ -1,43 +1,34 @@
 public class Solution {
-    ArrayList<ArrayList<Integer>> ans;
     
-    public void helper(ArrayList<Integer> a, int in, int k, ArrayList<Integer> ar){
-        int n=ar.size();
-        int sum=0;
-        for(int i=0;i<n;i++)
-            sum+=ar.get(i);
-        if(sum==k){
+    public void solve(ArrayList<Integer> a, int b, int curr, int sum, ArrayList<Integer> ar, ArrayList<ArrayList<Integer>> ans){
+        int n=a.size();
+        if(curr == n || sum>b) return;
+        if(sum==b){
             ans.add(ar);
             return;
         }
-        if(sum>k) return;
         
-        int m=a.size();
-        if(in==m) return;
-        
-        ArrayList<Integer> ax=new ArrayList<>();
-        for(int i=0;i<n;i++)
-            ax.add(ar.get(i));
-            
-        ArrayList<Integer> ay=new ArrayList<>();
-        for(int i=0;i<n;i++)
-            ay.add(ar.get(i));
-        
-        ax.add(a.get(in));
-        helper(a,in, k, ax);
-        //helper(a,in+1, k, ax);
-        helper(a,in+1, k, ar);
+        ArrayList<Integer> ar1 = new ArrayList<>(ar);
+        ar1.add(a.get(curr));
+        solve(a, b, curr, sum+a.get(curr), ar1, ans);
+        solve(a, b, curr+1, sum, ar, ans);
     }
     
-    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> a, int k) {
-        ans=new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> ar=new ArrayList<>();
-        Collections.sort(a);
+    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> a, int b) {
         int n=a.size();
+        Collections.sort(a);
+        
         for(int i=0;i<n-1;i++){
-            if(a.get(i)==a.get(i+1))
+            if(a.get(i) == a.get(i+1)){
+                a.remove(i+1);
+                i--;
+                n--;
+            }
         }
-        helper(a, 0, k, ar);
+        
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> ar = new ArrayList<>();
+        solve(a, b, 0, 0, ar, ans);
         return ans;
     }
 }
