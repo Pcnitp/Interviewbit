@@ -8,31 +8,22 @@
  */
 public class Solution {
     public ListNode mergeKLists(ArrayList<ListNode> a) {
-        int n=a.size();
-        TreeMap<Integer,Integer> tm=new TreeMap<>();
-        for(int i=0;i<n;i++){
-            ListNode b=a.get(i);
-            while(b!=null){
-                int x=b.val;
-                b=b.next;
-                if(tm.containsKey(x)) tm.put(x,tm.get(x)+1);
-                else tm.put(x,1);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(ListNode x: a){
+            while(x!=null){
+                pq.add(x.val);
+                x=x.next;
             }
         }
         
-        ListNode c=new ListNode(0);
-        for(Map.Entry<Integer,Integer> e:tm.entrySet()){
-            int x=e.getKey();
-            //System.out.println(x);
-            int count=e.getValue();
-            while(count>0){
-                count--;
-                ListNode d=new ListNode(x);
-                c.next=d;
-                c=c.next;
-            }
+        ListNode ans = new ListNode(0);
+        ListNode b=ans;
+        
+        while(!pq.isEmpty()){
+            b.next = new ListNode(pq.poll());
+            b=b.next;
         }
         
-        return c.next;
+        return ans.next;
     }
 }
