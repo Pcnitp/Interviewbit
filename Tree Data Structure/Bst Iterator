@@ -41,3 +41,59 @@ public class Solution {
  * Solution i = new Solution(root);
  * while (i.hasNext()) System.out.print(i.next());
  */
+
+
+//===============================================================================
+//===============================================================================
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+public class Solution {
+
+    TreeNode a;
+    int min;
+    
+    public Solution(TreeNode root) {
+        a=root;
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        if(a!=null) return true;
+        return false;
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        if(a.left != null)
+            a = deleteFromLeft(a);
+        else{
+            min = a.val;
+            a=a.right;
+        }
+        return min;
+    }
+    
+    public TreeNode deleteFromLeft(TreeNode root){
+        if(root.left == null){
+            min = root.val;
+            return root.right;
+        }
+        
+        root.left = deleteFromLeft(root.left);
+        return root;
+    }
+}
+
+/**
+ * Your Solution will be called like this:
+ * Solution i = new Solution(root);
+ * while (i.hasNext()) System.out.print(i.next());
+ */
