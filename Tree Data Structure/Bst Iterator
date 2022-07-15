@@ -9,50 +9,30 @@
  */
 
 public class Solution {
-    TreeNode a;
+
+    Stack<Integer> st;
+    
+    public void preorder(TreeNode root){
+        if(root==null) return;
+        preorder(root.right);
+        st.push(root.val);
+        preorder(root.left);
+    }
+    
     public Solution(TreeNode root) {
-        a=root;
-        while(hasNext()){
-            System.out.print(next()+" ");
-        }
+        st = new Stack<>();
+        preorder(root);
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() {
-        if(a!=null) return true;
-        return false;
+        if(st.isEmpty()) return false;
+        return true;
     }
 
     /** @return the next smallest number */
     public int next() {
-        int ret=0;
-        while(a!=null){
-            if(a.left==null){
-                ret=a.val;
-                a=a.right;
-                break;
-            }
-            else{
-                TreeNode t=a.left;
-                while(t.right!=null&& t.right!=a)
-                    t=t.right;
-                    
-                if(t.right==null){
-                    t.right=a;
-                    TreeNode x=a.left;
-                    a.left=null;
-                    a=x;
-                }
-                else{
-                    ret=t.val;
-                    t.right=null;
-                    a=a.right;
-                    break;
-                }
-            }
-        }
-        
-        return ret;
+        return st.pop();
     }
 }
 
