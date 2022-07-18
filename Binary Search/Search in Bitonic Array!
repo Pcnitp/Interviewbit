@@ -1,0 +1,45 @@
+public class Solution {
+    
+    public int findPivot(int[] a, int s, int e){
+        if(e-s == 1 || e==s) return s;
+        
+        int mid=s+(e-s)/2;
+        if(a[mid-1] <= a[mid] && a[mid] >= a[mid+1]) return mid;
+        if(a[mid-1] <= a[mid] && a[mid] <= a[mid+1]) return findPivot(a, mid, e);
+        return findPivot(a, s, mid-1);
+    }
+    
+    public int bsa(int[] a, int k, int s, int e, boolean flag){
+        if(e==s){
+            if(a[s] == k) return s;
+            return -1;
+        }
+        if(e<s) return -1;
+        
+        int mid=s+(e-s)/2;
+        if(a[mid] == k) return mid;
+        
+        if(flag){
+            if(a[mid] < k) return bsa(a, k, mid+1, e, flag);
+            return bsa(a, k, s, mid-1, flag);
+        }
+        else{
+            if(a[mid] < k) return bsa(a, k, s, mid-1, flag);
+            return bsa(a, k, mid+1, e, flag);
+        }
+    }
+    
+    public int solve(int[] a, int k) {
+        int n=a.length;
+        if(n==0) return -1;
+        if(n==1) {
+            if(a[0] == k) return 0;
+            else return -1;
+        }
+        
+        int p = findPivot(a, 0, n-1);
+        int x = bsa(a, k, 0, p, true);
+        if(x== -1) return bsa(a, k, p+1, n-1, false);
+        else return x;
+    }
+}
