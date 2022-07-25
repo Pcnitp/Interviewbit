@@ -1,16 +1,14 @@
 public class Solution {
     
-    public int solve(int a, int[] dp){
+    public int climb(int a, int[] dp){
         if(a==0) return 1;
         if(a<0) return 0;
-        if(dp[a]!=-1) return dp[a];
-        dp[a]=solve(a-1,dp)+solve(a-2,dp);
+        if(dp[a] == 0) dp[a] = climb(a-1, dp) + climb(a-2, dp);
         return dp[a];
     }
     
     public int climbStairs(int a) {
-        int[] dp=new int[a+1];
-        Arrays.fill(dp,-1);
-        return solve(a,dp);
+        int[] dp = new int[a+1];
+        return climb(a, dp);
     }
 }
