@@ -1,25 +1,31 @@
 public class Solution {
     
-    public int solve(String s, String t, int n, int m){
-        if(s.equals(t)) return 0;
-        if(n==0) return m;
-        if(m==0) return n;
+    public int solve(String a, String b, int i, int j, int[][] dp){
+        int n=a.length();
+        int m=b.length();
+        if(i==n) return m-j;
+        if(j==m) return n-i;
         
+        if(dp[i][j] != -1) return dp[i][j];
         
-        //insert
-        int x=solve(s,t.substring(1),n,m-1);
-        //delete
-        int y=solve(s.substring(1),t,n-1,m);
-        //replace
-        int z=solve(s.substring(1),t.substring(1),n-1,m-1);
+        if(a.charAt(i) == b.charAt(j))
+            dp[i][j] =  solve(a, b, i+1, j+1, dp);
+        else{
+            int x = solve(a, b, i+1, j, dp);
+            int y = solve(a, b, i+1, j+1, dp);
+            int z = solve(a, b, i, j+1, dp);
+            dp[i][j] = 1 + Math.min(x, Math.min(y, z));
+        }
         
-        int ans=Math.min(x,Math.min(y,z))+1;
-        return ans;
+        return dp[i][j];
     }
     
-    public int minDistance(String A, String B) {
-        
-        int ans=solve(A,B,A.length(),B.length());
-        return ans;
+    public int minDistance(String a, String b) {
+        int n=a.length();
+        int m=b.length();
+        int[][] dp = new int[n+1][m+1];
+        for(int i=0;i<=n;i++)
+            Arrays.fill(dp[i], -1);
+        return solve(a.toLowerCase(), b.toLowerCase(), 0, 0, dp);
     }
 }
