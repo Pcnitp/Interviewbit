@@ -1,65 +1,54 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
     
-    // public boolean solve(final String s, final String r, int x, int y, String curr, boolean[][] dp){
-    //     int n=s.length();
-    //     int m=r.length();
-    //     if(y==m){
-    //         if(curr.equals(s)) return true;
-    //         return false;
-    //     }
-    //     if(x==n){
-    //         while(y<m){
-    //             if(r.charAt(y)!='*') return false;
-    //             y++;
-    //         }
-    //         return true;
-    //     }
-        
-    //     if(dp[x][y]) return true;
-        
-    //     boolean count=false;
-        
-    //     if(r.charAt(y)=='?') count=solve(s,r,x+1,y+1,curr+s.charAt(x),dp);
-    //     else if(r.charAt(y)=='*'){
-    //         count=solve(s,r,x+1,y+1,curr+s.charAt(x),dp);
-    //         if(count) return true;
-    //         count=count|| solve(s,r,x+1,y,curr+s.charAt(x),dp);
-    //         if(count) return true;
-    //         count=count|| solve(s,r,x,y+1,curr,dp);
-    //     } 
-    //     else{
-    //         if(s.charAt(x)==r.charAt(y))
-    //             count=solve(s,r,x+1,y+1,curr+s.charAt(x),dp);
-    //     }
-        
-    //     dp[x][y]=count;
-    //     return count;
-    // }
-    
-    public int isMatch(final String s, final String r) {
-        int n=s.length();
-        int m=r.length();
-        
-        boolean[][] dp=new boolean[n+1][m+1];
-
-        //boolean f=solve(s,r,0,0,"",dp);
-        
-        dp[0][0]=true;
-        for(int i=1;i<=m;i++)
-            if(r.charAt(i-1)=='*') dp[0][i]=dp[0][i-1];
+    public int solve(String a, String b, int i, int j, int n, int m, int[][] dp){
+        if(i==n){
+            while(j<m){
+                if(b.charAt(j) != '*') return 0;
+                j++;
+            }
             
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=m;j++){
-                if(r.charAt(j-1)=='*')
-                    dp[i][j]= dp[i-1][j] || dp[i][j-1];
-                else if(r.charAt(j-1)=='?' || r.charAt(j-1)==s.charAt(i-1))
-                    dp[i][j]=dp[i-1][j-1];
-                else dp[i][j]=false;
+            return 1;
+        }
+        else if(j== m) return 0;
+        
+        if(dp[i][j] != -1) return dp[i][j];
+        int ans = 0;
+        
+        if((a.charAt(i) == b.charAt(j)) || (b.charAt(j) == '?'))
+            ans = solve(a, b, i+1, j+1, n, m, dp);
+        else if(b.charAt(j) == '*') {
+            ans = solve(a, b, i+1, j, n, m, dp);
+            if(ans == 0) ans = solve(a, b, i, j+1, n, m, dp);
+        }
+        else ans = 0;
+        
+        dp[i][j] = ans;
+        return ans;
+    }
+    
+    public int isMatch(final String a, final String c) {
+        int n=a.length();
+        int m=c.length();
+        String b = c;
+        
+        for(int i=0; i<m;i++){
+            if(b.charAt(i) == '*'){
+                int j=i;
+                while(i<m && b.charAt(i) == '*') 
+                    i++;
+                if(i-j>1) {
+                    b=b.substring(0, j+1) + b.substring(i);
+                    m=m-(i-j+1);
+                }
             }
         }
+        m=b.length();
+        int[][] dp = new int[n+1][m+1];
         
-        if(dp[n][m]) return 1;
-        return 0;
+        for(int i=0;i<=n;i++)
+            Arrays.fill(dp[i], -1);
+        
+        return solve(a, b, 0, 0, n, m, dp);
     }
 }
