@@ -1,27 +1,29 @@
 public class Solution {
     
-    public int solve(String s, int in, int[] dp){
-        int n=s.length();
-        if(in==n||in==n-1) return 1;
-        if(s.charAt(in)=='0') return 0;
-        if(dp[in]!=-1) return dp[in];
+    public int solve(String a, int curr, int n, int[] dp){
+        int m = 1000000007;
+        if(curr == n) return 1;
+        if(a.charAt(curr) == '0'){
+            dp[curr] = 0;
+            return 0;
+        } 
+        if(curr == n-1) return 1;
         
-        int res=solve(s,in+1,dp);
-        System.out.println(res);
+        if(dp[curr] != -1) return dp[curr];
+        int ans = solve(a, curr+1, n, dp)%m;
+        if(a.charAt(curr) == '1' || 
+           (a.charAt(curr) == '2' && a.charAt(curr+1) < '7' && a.charAt(curr+1) >= '0'))
+               ans = (ans + solve(a, curr+2, n, dp)%m)%m;
         
-        if(in<n-1){
-            int x=Integer.parseInt(s.substring(in,in+2));
-            if(x<27) res+=solve(s,in+2,dp);
-        }
-        
-        dp[in]=res;
-        return res;
+        dp[curr] = ans;
+        return ans;
     }
     
     public int numDecodings(String a) {
-        int n=a.length();
-        int[] dp=new int[n+1];
-        Arrays.fill(dp,-1);
-        return solve(a,0,dp);
+        int n = a.length();
+        if(n==0) return 0;
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+        return solve(a, 0, n, dp);
     }
 }
