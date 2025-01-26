@@ -1,37 +1,30 @@
 public class Solution {
     public ArrayList<Integer> maxset(ArrayList<Integer> a) {
-        int n=a.size();
-        int l=-1,r=-1;
-        long max=0,curr=0;
-        int ansl=-1,ansr=-1;
+        ArrayList<Integer> b = new ArrayList();
         
-        for(int i=0;i<n;i++){
-            if(a.get(i)>=0){
-                if(l==-1) l=i;
-                curr+=a.get(i);
-                r=i;
-                if((curr>max)||(curr==max && (r-l)>(ansr-ansl))){
-                    //System.out.println(r+" "+l+" "+ansr+" "+ansl+" "+curr+" "+max);
-                    ansl=l;
-                    ansr=r;
-                    max=curr;
-                    //curr=0;
-                }
-            }    
-            else{
-                curr=0;
-                l=-1;
-                r=-1;
+        int i=0;
+        int n = a.size();
+        long maxSum = 0;
+        
+        while(i<n) {
+            ArrayList<Integer> c = new ArrayList();
+            long sum = 0;
+            int j=i;
+
+            while((j<n) && a.get(j) > -1){
+                c.add(a.get(j));
+                sum+=a.get(j);
+                j++;
             }
-        }
             
-        ArrayList<Integer> ar=new ArrayList<>();
+            if((maxSum<sum) || (maxSum == sum && b.size() < c.size())){
+               b=c;
+               maxSum = sum; 
+            } 
+            
+            i=j+1;  
+        }
         
-        if(ansl==-1) return ar;
-        
-        for(int i=ansl;i<=ansr;i++)
-            ar.add(a.get(i));
-        
-        return ar;
+        return b;
     }
 }
