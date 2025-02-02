@@ -1,59 +1,31 @@
 public class Solution {
-    // DO NOT MODIFY THE LIST
-    
-    public int left(final List<Integer> a, int s, int e, int b){
-        if(s==e) return s;
-        int mid=s+(e-s)/2;
-        int y=a.get(mid);
-        if(y==b) return left(a,s,mid,b);
-        else return left(a,mid+1,e,b);
-        
+
+    public int bs(int[] a, int b, int s, int e) {
+        if(e<s) return -1;
+        int mid = s + (e-s)/2;
+        if(a[mid] == b) return mid;
+        else if(a[mid] < b) return bs(a, b, mid+1, e);
+        else return bs(a, b, s, mid-1);   
     }
     
-    public int right(final List<Integer> a, int s, int e, int b){
-        if(s==e) return s;
-        if(s==e-1){
-            if(a.get(e)==b) return e;
-            return s;
-        }
-        int mid=s+(e-s)/2;
-        int y=a.get(mid);
-        if(y==b) return right(a,mid,e,b);
-        else return right(a,s,mid-1,b);
+    public int[] searchRange(final int[] a, int b) {
+        int in = bs(a, b, 0, a.length-1);
+        int[] ans = new int[2];
         
-    }
-    
-    public ArrayList<Integer> search(final List<Integer> a, int s, int e, int b){
-        if(s>e){
-            ArrayList<Integer> x=new ArrayList<Integer>();
-            x.add(-1);
-            x.add(-1);
-            return x;
+        if(in == -1) {
+            ans[0] = -1;
+            ans[1] = -1;
+            return ans;
         }
         
-        if(a.get(s)==b && a.get(e)==b){
-            ArrayList<Integer> x=new ArrayList<Integer>();
-            x.add(s);
-            x.add(e);
-            return x;
-        }
+        int start = in;
+        int end = in;
         
-        int mid=s+(e-s)/2;
-        int y=a.get(mid);
-        if(y>b) return search(a,s,mid-1,b);
-        else if(y<b) return search(a,mid+1,e,b);
+        while(start > -1 && a[start] == b) start --;
+        while(end < a.length && a[end] == b) end ++;
         
-        int l=left(a,s,mid,b);
-        int r=right(a,mid,e,b);
-        
-        ArrayList<Integer> x=new ArrayList<Integer>();
-        x.add(l);
-        x.add(r);
-        return x;
-    }
-    
-    public ArrayList<Integer> searchRange(final List<Integer> a, int b) {
-        int n=a.size();
-        return search(a,0,n-1,b);
+        ans[0] = start+1;
+        ans[1] = end-1;
+        return ans;
     }
 }
