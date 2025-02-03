@@ -8,28 +8,22 @@
  */
 public class Solution {
     public ListNode insertionSortList(ListNode a) {
-        ListNode b=new ListNode(a.val);
-        a=a.next;
+        ListNode b = a;
         
-        while(a!=null){
-            ListNode c=new ListNode(a.val);
-            a=a.next;
-            ListNode d=b;
-            if(b.val>c.val){
-                c.next=b;
-                b=c;
-                continue;
+        while(b.next != null){
+            ListNode c = b.next;
+            while(c != null) {
+                if(c.val < b.val) {
+                    int x = b.val;
+                    b.val = c.val;
+                    c.val = x;
+                }
+                c = c.next;
             }
             
-            ListNode prev=d;
-            d=d.next;
-            while(d!=null&&d.val<c.val){
-                prev=d;
-                d=d.next;
-            }
-            prev.next=c;
-            c.next=d;
+            b = b.next;
         }
-        return b;
+        
+        return a;
     }
 }
