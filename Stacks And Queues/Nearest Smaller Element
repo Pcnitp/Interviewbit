@@ -1,28 +1,16 @@
 public class Solution {
-    
-    class Pair{
-        int val;
-        int in;
-        Pair(int a, int b){
-            val=a;
-            in=b;
-        }
-    }
-    
-    public ArrayList<Integer> prevSmaller(ArrayList<Integer> a) {
-        int n=a.size();
-        ArrayList<Integer> ar=new ArrayList<Integer>();
-        Stack<Pair> stack=new Stack<>();
+    public int[] prevSmaller(int[] a) {
+        int n = a.length;
+        int[] b = new int[n];
+        Stack<Integer> st = new Stack<>();
         
-        for(int i=0;i<n;i++){
-            while(!stack.isEmpty() && stack.peek().val>=a.get(i))
-                stack.pop();
-            if(stack.isEmpty()){
-                ar.add(-1);
-                stack.add(new Pair(a.get(i),i));
-            }
-            else ar.add(stack.peek().val);
+        for(int i=0; i<n; i++){
+            while((!st.empty()) && (a[st.peek()] >= a[i])) st.pop();  
+            if(st.empty()) b[i] = -1;
+            else b[i] = a[st.peek()];
+            st.push(i);
         }
-        return ar;
+        
+        return b;
     }
 }
