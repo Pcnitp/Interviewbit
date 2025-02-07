@@ -1,31 +1,26 @@
 public class Solution {
+    
     ArrayList<ArrayList<Integer>> ans;
     
-    public void solve(ArrayList<Integer> a, int in, int k, ArrayList<Integer> ar){
-        int m=a.size();
-        if(in==m){
-            int n=ar.size();
-            int sum=0;
-            for(int i=0;i<n;i++)
-                sum+=ar.get(i);
-            if(sum==k) ans.add(ar);
+    public void solve(ArrayList<Integer> a, int b, int n, int currIndex, int currSum, ArrayList<Integer> currArray) {
+        if(currIndex == n) {
+            if((currSum == b) && (!ans.contains(currArray))) ans.add(currArray);
             return;
         }
         
-        ArrayList<Integer> ar1=new ArrayList<Integer>();
-        int n=ar.size();
-        for(int i=0;i<n;i++)
-            ar1.add(ar.get(i));
-        ar1.add(a.get(in));
-        solve(a,in+1,k,ar1);
-        solve(a,in+1,k,ar);
+        ArrayList<Integer> ar = new ArrayList<>(currArray);
+        ar.add(a.get(currIndex));
+        
+        solve(a, b, n, currIndex+1, currSum, currArray);
+        solve(a, b, n, currIndex+1, currSum+a.get(currIndex), ar);
     }
     
-    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> a, int k) {
-        ans=new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> ar=new ArrayList<>();
+	public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> a, int b) {
+        int n = a.size();
         Collections.sort(a);
-        solve(a, 0, k,ar);
+        ans = new ArrayList<ArrayList<Integer>>();
+            
+        solve(a, b, n, 0, 0, new ArrayList<Integer>());
         return ans;
-    }
+	}
 }
