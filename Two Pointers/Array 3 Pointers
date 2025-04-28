@@ -21,4 +21,38 @@ public class Solution {
         
         return min;
     }
+
+    // Alternate solution
+    public int minimizeAlternate(final int[] a, final int[] b, final int[] c) {
+        int l = a.length;
+        int m = b.length;
+        int n = c.length;
+        
+        int i=0, j=0, k=0;
+        int min = Integer.MAX_VALUE;
+        
+        while(i <l && j<m && k<n) {
+            int x = Math.abs(a[i] - b[j]);
+            int y = Math.abs(c[k] - b[j]);
+            int z = Math.abs(a[i] - c[k]);
+            
+            int max = Math.max(x, Math.max(y, z));
+            min = Math.min(min, max);
+            
+            if(max == x) {
+                if(a[i] < b[j]) i++;
+                else j++;
+            }
+            else if(max == y) {
+                if(b[j] < c[k]) j++;
+                else k++;
+            }
+            else {
+                if(a[i] < c[k]) i++;
+                else k++;
+            }
+        }
+        
+        return min;
+    }
 }
